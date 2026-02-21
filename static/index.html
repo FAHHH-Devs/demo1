@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastAPI + MySQL Todo</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 50px auto; text-align: center; }
+        input { padding: 10px; width: 70%; }
+        button { padding: 10px; cursor: pointer; }
+        ul { list-style: none; padding: 0; text-align: left; }
+        li { background: #eee; margin: 5px 0; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>My Todo List</h1>
+    <input type="text" id="todoInput" placeholder="Add a new task...">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList"></ul>
+
+    <script>
+        async function loadTodos() {
+            const res = await fetch('/items');
+            const data = await res.json();
+            const list = document.getElementById('todoList');
+            list.innerHTML = data.items.map(i => `<li>${i.task} ${i.done ? '✅' : '⏳'}</li>`).join('');
+        }
+
+        async function addTodo() {
+            const task = document.getElementById('todoInput').value;
+            await fetch('/items', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({task: task})
+            });
+            document.getElementById('todoInput').value = '';
+            loadTodos();
+        }
+        loadTodos();
+    </script>
+</body>
+</html>

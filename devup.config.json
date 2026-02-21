@@ -1,0 +1,16 @@
+{
+  "projectType": "FastAPI",
+  "services": [
+    "mysql"
+  ],
+  "env": {
+    "DATABASE_URL": "",
+    "DB_HOST": "mysql",
+    "DB_USER": "devuser",
+    "DB_PASSWORD": "devpassword",
+    "DB_PASS": "devpassword",
+    "DB_NAME": "todos_db",
+    "REDIS_URL": "",
+    "MONGODB_URI": ""
+  }
+}
